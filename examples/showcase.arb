@@ -1,0 +1,75 @@
+// This file demonstrates highlighting, not an implemented Arbor program.
+// Several APIs and template spellings remain provisional.
+
+const SECONDS_PER_DAY = 24 * 60 * 60;
+let amount = 1.4;
+let approximate: f128 = 1.4;
+let café = "Unicode identifiers work in the editor.";
+
+pure fun add(x: int, y: int) -> int {
+    return x + y;
+}
+
+@unique
+@flags
+enum Permission {
+    NONE = 0,
+    READ = auto(),
+    WRITE = auto(),
+    READ_WRITE = READ | WRITE,
+}
+
+class AccountLockedError extends Exception {
+    account_id: null AccountId = null;
+    template = term'Account ${bold}{account_id}${reset} is locked.';
+    fallback_template = term'An account is locked.';
+}
+
+let day = date'2000-01-01';
+let token = secret'not-a-real-password';
+let greeting = t'Hello, {name}.';
+let filename = f"report-{year}-{month}.csv";
+
+// The inner quote must not close the outer terminal literal.
+let letter = term'{datetime'2026-01-01T00:00:00Z'.to_timestamp()}';
+let nested = term'Outer {format(term'Inner {name}')} done';
+let lookup_result = term'Value: {lookup({"key": value})}';
+
+write(term'An unrecoverable $bold${red}error$reset occurred.');
+write(term'$bold Heading: $push${company_error}failure$pop done.$reset');
+write(term'Escaped dollars: $$company_error and $${blue}.');
+
+let description = """An ordinary multiline string.
+    Its whitespace is preserved, including this indentation.
+    Quotes such as "this" do not end the string.
+""";
+
+async fun upload(x: file) -> void {
+    log("Starting upload");
+    ...;
+}
+
+fun main() -> void {
+    let message = switch status {
+        case 200 => "Success",
+        case 404 => "Not found",
+        else => "Unexpected response",
+    };
+
+    for permission in permissions {
+        if permission is null {
+            continue;
+        }
+        write(message);
+    }
+
+    try {
+        throw AccountLockedError(AccountId(372), log=true);
+    } except AccountLockedError as error {
+        log(error);
+    } finally {
+        log("Done");
+    }
+
+    warn DeprecatedIn71Warning("old_function");
+}
